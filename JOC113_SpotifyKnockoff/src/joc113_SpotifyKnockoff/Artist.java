@@ -52,8 +52,8 @@ public class Artist {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 		
 	}
@@ -79,8 +79,8 @@ public class Artist {
 				//System.out.println("artistID from database: " + this.artistID);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
@@ -101,8 +101,8 @@ public class Artist {
 				db.closeDbConnection();
 				db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
@@ -131,8 +131,8 @@ public class Artist {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();	//debug
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 

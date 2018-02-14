@@ -27,9 +27,11 @@ public class Tester {
 			x = x/y;
 		}
 		catch (Exception e){
+		
 			ErrorLogger.log(e.getMessage());
 		}
 		*/
+		
 		
 		//Use to test Artist and Song constructors + addArtist method
 		//Song testSong = new Song("Subterranean Homesick Blues", 3.25, "1965-06-07", "1964-09-22");
@@ -78,6 +80,8 @@ public class Tester {
 			e.printStackTrace();
 		}
 		*/
+		
+		
 		
 	}
 

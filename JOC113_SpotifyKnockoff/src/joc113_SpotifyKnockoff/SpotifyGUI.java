@@ -1,36 +1,51 @@
 package joc113_SpotifyKnockoff;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
- * Not needed yet
+ * This is the GUI for the SpotifyKnockoff application.
+ * Uses the Spotify method to search the database for the input specified by the
+ * user via the GUI
  * @author Josh Chamberlain
  * version 1.1
  */
 public class SpotifyGUI {
-/*
-	//This is the global variable for the frame that was created
-	private JFrame frame;
-	//I had to put this one here because WindowBuilder made it a local variable
-	JRadioButton rdbtnAlbums = new JRadioButton("Albums");
+
+	private static JFrame frame;
+	private JTextField txtSearch;
+	private JRadioButton radShowAlbums;
+	private JRadioButton radShowArtists;
+	private JRadioButton radShowSongs;
+	private DefaultTableModel musicData;
+	private JTable tblData;
+	private ButtonGroup buttons = new ButtonGroup();
 
 	/**
 	 * Launch the application.
 	 */
-	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					SpotifyGUI window = new SpotifyGUI();
-					window.frame.setVisible(true);
+					window.getFrame().setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					ErrorLogger.log(e.getMessage());
 				}
 			}
 		});
@@ -39,45 +54,127 @@ public class SpotifyGUI {
 	/**
 	 * Create the application.
 	 */
-	/*
 	public SpotifyGUI() {
 		initialize();
 	}
-	*/
 
-	//It's very important to makre sure WindowBuilder isn't only creating local variables
-	//It has to make global variables that can be accessed from other parts of the program
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	/*
 	private void initialize() {
-		//Luckily, it did make this a global variable
-		frame = new JFrame("Spotify");
-		frame.setBounds(100, 100, 1000, 600);
-		//This sets everything absolutely with pixels
-		frame.getContentPane().setLayout(null);
+		
+		setFrame(new JFrame("Spotify"));
+		getFrame().setBounds(100, 100, 1000, 600);
+		getFrame().getContentPane().setLayout(null);
+		
+		JLabel lblViewSelector = new JLabel("Select View");
+		lblViewSelector.setBounds(20, 30, 99, 16);
+		getFrame().getContentPane().add(lblViewSelector);
+		
+		radShowAlbums = new JRadioButton("Albums");
+		radShowAlbums.addActionListener(new ActionListener() {
+			//if the Albums radio button is selected, display the full list of Albums
+			public void actionPerformed(ActionEvent e) {
+				if (radShowAlbums.isSelected()){
+					tblData.setModel(Spotify.searchAlbums(""));
+				}
+			}
+		});
+		radShowAlbums.setBounds(40, 60, 150, 25);
+		radShowAlbums.setSelected(true);
+		getFrame().getContentPane().add(radShowAlbums);
 		
 		
-		rdbtnAlbums.setBounds(40, 137, 127, 25);
-		frame.getContentPane().add(rdbtnAlbums);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		radShowArtists = new JRadioButton("Artists");
+		radShowArtists.addActionListener(new ActionListener() {
+			//if the Artists button is selected, display the full list of Artists
+			public void actionPerformed(ActionEvent e) {
+				if (radShowArtists.isSelected()) {
+					tblData.setModel(Spotify.searchArtists(""));
+				}
+			}
+		});
+		radShowArtists.setBounds(40, 85, 150, 25);
+		getFrame().getContentPane().add(radShowArtists);
+		
+		radShowSongs = new JRadioButton("Songs");
+		radShowSongs.addActionListener(new ActionListener() {
+			//if the Songs radio button is selected, display the full list of Songs
+			public void actionPerformed(ActionEvent e) {
+				if (radShowSongs.isSelected()) {
+					tblData.setModel(Spotify.searchSongs(""));
+				}
+			}
+		});
+		radShowSongs.setBounds(40, 110, 150, 25);
+		getFrame().getContentPane().add(radShowSongs);
+		
+		//Add all of the buttons to a ButtonGroup so only one can be selected at once
+		buttons.add(radShowAlbums);
+		buttons.add(radShowArtists);
+		buttons.add(radShowSongs);
+		
+		JLabel lblSearch = new JLabel("Search");
+		lblSearch.setBounds(20, 290, 100, 20);
+		getFrame().getContentPane().add(lblSearch);
+		
+		getFrame().getContentPane().add(lblViewSelector);
+		txtSearch = new JTextField();
+		txtSearch.setBounds(20, 315, 200, 30);
+		getFrame().getContentPane().add(txtSearch);
+		txtSearch.setColumns(10);
+		
+		tblData = new JTable(musicData);
+		tblData.setBounds(300, 45, 600, 400);
+		tblData.setFillsViewportHeight(true);
+		tblData.setShowGrid(true);
+		tblData.setGridColor(Color.BLACK);
+		getFrame().getContentPane().add(tblData);
+		
+		//Set the default screen to be a complete list of Albums
+		tblData.setModel(Spotify.searchAlbums(""));
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//if the songs button is selected, show Song search results
+				if(radShowSongs.isSelected()){
+					tblData.setModel(Spotify.searchSongs(txtSearch.getText()));
+					//This code was used for Dmitriy's 
+					//musicData = getSongData(txtSearch.getText());
+					//tblData.setModel(musicData);
+				}
+				//If the Artist button is selected, show Artist results
+				else if(radShowArtists.isSelected()) {
+					tblData.setModel(Spotify.searchArtists(txtSearch.getText()));
+				}
+				//if the Albums button is selected, show Album search results
+				else if(radShowAlbums.isSelected()) {
+					tblData.setModel(Spotify.searchAlbums(txtSearch.getText()));
+				}
+			}
+		});
+		
+		//Create Search button
+		btnSearch.setBounds(103, 350, 115, 30);
+		
+		getFrame().getContentPane().add(btnSearch);
+		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+
+	/**
+	 * static getter for the frame so it can be referenced in other classes
+	 * @return frame
+	 */
+	public static JFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * static setter for the frame so it can be called by another class
+	 * @param frame
+	 */
+	public static void setFrame(JFrame frame) {
+		SpotifyGUI.frame = frame;
+	}	
 	
-	private void getSongData() {
-		
-		String sql = "SELECT * FROM songs;";
-		
-		try {
-			DbUtilities db = new DbUtilities();
-			DefaultTableModel dataTable = db.getDataTable(sql);
-			tblData.setFillsViewpowrtheight(true);
-			tblData.setShowGrid(true);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	*/
 }

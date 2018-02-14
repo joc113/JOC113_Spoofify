@@ -64,8 +64,8 @@ public class Song {
 			ps.executeUpdate();
 			db.closeDbConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	
@@ -113,8 +113,8 @@ public class Song {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	
@@ -141,8 +141,8 @@ public class Song {
 				// System.out.println("Song title from database: " + this.title);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log error
+			ErrorLogger.log(e.getMessage());
 		}
 	
 	}
@@ -151,6 +151,9 @@ public class Song {
 	 * @param songID
 	 */
 	//Deletes song instance in database
+	//As a note, nothing should be all the way deleted from a database
+	//Just because something is not visible to the user doesn't mean it should be deleted from the database
+	//You can instead make an isActive clause somewhere where queries ignore data where isActive is set to false
 	public void deleteSong(String songID) {
 		//Create instance of Hashtable
 		songArtists = new Hashtable<String, Artist>();
@@ -168,8 +171,8 @@ public class Song {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	
@@ -197,8 +200,8 @@ public class Song {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 		
 	}
@@ -226,8 +229,8 @@ public class Song {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
@@ -251,8 +254,8 @@ String sql = "DELETE FROM song_artist WHERE fk_artist_id = ?;";
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	
@@ -273,13 +276,13 @@ String sql = "DELETE FROM song_artist WHERE fk_artist_id = ?;";
 			ps = conn.prepareStatement(sql);
 			db.closeDbConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 /**
  * Getter for songID
- * @return
+ * @return songID
  */
 	public String getSongID() {
 		return songID;
@@ -334,8 +337,8 @@ String sql = "DELETE FROM song_artist WHERE fk_artist_id = ?;";
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 		
 	}

@@ -73,8 +73,8 @@ public class Album {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
@@ -102,8 +102,8 @@ public class Album {
 				// System.out.println("Album title from database: " + this.title);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	/**
@@ -123,8 +123,8 @@ public class Album {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	
@@ -152,8 +152,8 @@ public class Album {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 		
 	}
@@ -180,8 +180,8 @@ public class Album {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	
@@ -207,8 +207,8 @@ public class Album {
 			db.closeDbConnection();
 			db = null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();		//debug
+			//log the error
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 	
@@ -233,21 +233,21 @@ public class Album {
 			ps = conn.prepareStatement(sql);
 			db.closeDbConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//log the error
+			ErrorLogger.log(e.getMessage());
 			}
 		}
 	
 	/**
 	 * Getter for albumID
-	 * @return
+	 * @return albumID
 	 */
 	public String getAlbumID() {
 		return albumID;
 	}
 	/**
 	 * Getter for coverImagePath
-	 * @return
+	 * @return albumID
 	 */
 	public String getCoverImagePath() {
 		return coverImagePath;

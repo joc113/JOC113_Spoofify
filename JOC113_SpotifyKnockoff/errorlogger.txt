@@ -1,1 +1,2 @@
-java.text.SimpleDateFormat@f17b4ca5Henlo
+2018.02.12.18.14.54
+/ by zero

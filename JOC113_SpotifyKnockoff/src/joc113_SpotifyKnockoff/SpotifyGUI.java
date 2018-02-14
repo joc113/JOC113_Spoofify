@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
  */
 public class SpotifyGUI {
 
+	//Variable declarations of all GUI components
 	private static JFrame frame;
 	private JTextField txtSearch;
 	private JRadioButton radShowAlbums;
@@ -33,7 +34,9 @@ public class SpotifyGUI {
 	private JRadioButton radShowSongs;
 	private DefaultTableModel musicData;
 	private JTable tblData;
-	private ButtonGroup buttons = new ButtonGroup();
+	private JScrollPane scroll;
+	//Group for buttons so only one can be selected at once
+	private ButtonGroup buttons = new ButtonGroup();		
 
 	/**
 	 * Launch the application.
@@ -64,11 +67,11 @@ public class SpotifyGUI {
 	private void initialize() {
 		
 		setFrame(new JFrame("Spotify"));
-		getFrame().setBounds(100, 100, 1000, 600);
+		getFrame().setBounds(100, 100, 1200, 550);
 		getFrame().getContentPane().setLayout(null);
 		
 		JLabel lblViewSelector = new JLabel("Select View");
-		lblViewSelector.setBounds(20, 30, 99, 16);
+		lblViewSelector.setBounds(20, 30, 100, 15);
 		getFrame().getContentPane().add(lblViewSelector);
 		
 		radShowAlbums = new JRadioButton("Albums");
@@ -109,27 +112,47 @@ public class SpotifyGUI {
 		radShowSongs.setBounds(40, 110, 150, 25);
 		getFrame().getContentPane().add(radShowSongs);
 		
+		
 		//Add all of the buttons to a ButtonGroup so only one can be selected at once
 		buttons.add(radShowAlbums);
 		buttons.add(radShowArtists);
 		buttons.add(radShowSongs);
 		
+		//Search label
 		JLabel lblSearch = new JLabel("Search");
 		lblSearch.setBounds(20, 290, 100, 20);
 		getFrame().getContentPane().add(lblSearch);
 		
+		//Frame and txtSearch box
 		getFrame().getContentPane().add(lblViewSelector);
 		txtSearch = new JTextField();
 		txtSearch.setBounds(20, 315, 200, 30);
 		getFrame().getContentPane().add(txtSearch);
 		txtSearch.setColumns(10);
 		
+		//Table to hold DefaultTableModel
 		tblData = new JTable(musicData);
-		tblData.setBounds(300, 45, 600, 400);
+		//I took out the setBounds here because I'm using the JScrollPane's size
+		//tblData.setBounds(300, 45, 600, 400);
 		tblData.setFillsViewportHeight(true);
 		tblData.setShowGrid(true);
 		tblData.setGridColor(Color.BLACK);
 		getFrame().getContentPane().add(tblData);
+		
+		//I referenced Stack Overflow for this next part, since my Design tab isn't working on WindowBuilder
+		//url: https://stackoverflow.com/questions/14899918/dynamically-adding-jtable-to-jscrollpane
+		//     Authors: Matt and Mikhail Vladimirov
+		//url: https://stackoverflow.com/questions/18906835/cant-see-components-in-jscrollpane
+		//     Author: MadProgrammer
+		//Create a JScrollPane
+		scroll = new JScrollPane();
+		scroll.setBounds(300, 45, 800, 400);
+		//scroll.setBounds(x, y, width, height);
+		getFrame().getContentPane().add(scroll);
+		scroll.setVisible(true);
+		//Add the JTable to the JScrollPane
+	    scroll.setViewportView(tblData);
+	    scroll.getViewport();
 		
 		//Set the default screen to be a complete list of Albums
 		tblData.setModel(Spotify.searchAlbums(""));

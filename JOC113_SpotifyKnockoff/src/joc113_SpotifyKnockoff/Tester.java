@@ -18,6 +18,20 @@ import java.util.Vector;
 public class Tester {
 	public static void main(String[] args){
 		
+		//Use to test SongUpdate class
+		//SongUpdate update = new SongUpdate();
+		//update.updateFilePath("55c908a9-c2f9-44c5-90ed-aecade9234d7", "This is a file path");
+		SongDelete sd = new SongDelete();
+		sd.delete("c463cd2d-c20c-4ce8-b2e0-edef9d3cebc2");
+		
+		//Use to test Artist Persistence Functions
+		//ArtistCreate artist = new ArtistCreate();
+		//artist.create("", "", "Test Artist for Josh", "");
+		
+		
+		//Use to test Album JPA functions
+		//AlbumCreate album = new AlbumCreate();
+		//album.create("Test album for Josh", "2018-12-12", "2018-12-12", 4, "", 5);
 		
 		/*
 		//use this to test ErrorLogger

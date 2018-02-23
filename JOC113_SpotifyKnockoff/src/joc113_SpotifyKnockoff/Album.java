@@ -8,40 +8,88 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * Provides Methods For:
  * 1. Creating Album Objects from scratch
  * 2. Creating Objects that relate to existing database records
  * 3. Updating the database as needed
+ * @param albumID is the unique ID of the Album
+ * @param title is the name of the Album
+ * @param releaseDate is the date that the album was released
+ * @param coverImagePath is the file path for the Album cover
+ * @param numberOfTracks is the number of Songs associated with the Album
+ * @param rating is the PMRC rating of the album for parental purposes
+ * @param length is the length of the album
  * @author Josh Chamberlain
  * @version 1.1
  */
+//Use JPA to connect with the database
+@Entity
+//Link with the desired database table
+@Table (name = "album")
 public class Album {
 	
+	//Create a unique ID for the Album
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+	/* Specify the column names as they are in MySQL syntax so we don't run into issues
+	 * since our variable names don't have the same names as the MySQL columns*/
+	@Column (name = "album_id")
 	private String albumID;				//unique id
+	
+	@Column (name = "title")
 	private String title;				//title of album
+	
+	@Column (name = "release_date")
 	private String releaseDate;			//date of album release
+	
+	@Column (name = "cover_image_path")
 	private String coverImagePath;		//file path for cover image
+	
+	@Column (name = "recording_company_name")
 	private String recordingCompany;	//record label
+	
+	@Column (name = "number_of_tracks")
 	private int numberOfTracks;			//int for number of tracks in the album
+	
+	@Column (name = "PMRC_rating")
 	private String rating;				//PMRC rating for parents
+	
+	@Column (name = "length")
 	private double length;				//length of the album
+	//Transient tag because the Map is not a column in the database
+	@Transient
 	Map<String, Song> albumSongs;		//Map for referencing songs in the album
 
+	/**
+	 * Default Constructor which is needed for the Persistence functions
+	 */
+	public Album() {
+		super();
+	}
 	
 	/**
 	 * Constructor for creating a new Album Object from scratch
 	 * Transports this information to MySQL database
-	 * @param title
-	 * @param releaseDate
-	 * @param recordingCompany
-	 * @param numberOfTracks
-	 * @param rating
-	 * @param length
+	 * @param title is set with this constructor
+	 * @param releaseDate is set with this constructor
+	 * @param recordingCompany is set with this constructor
+	 * @param numberOfTracks is set with this constructor
+	 * @param rating is set with this constructor
+	 * @param length is set with this constructor
 	 */
 	public Album (String title, String releaseDate, String recordingCompany, int numberOfTracks,
 			String rating, double length) {
-		
+		super();
 		//Set appropriate values
 		this.albumID = UUID.randomUUID().toString();
 		this.title = title;
@@ -79,9 +127,10 @@ public class Album {
 	}
 	/**
 	 * Retrieves information from database to create an Album Object
-	 * @param albumID
+	 * @param albumID the String passed into the method that is used to identify which Album to retrieve
 	 */
 	public Album(String albumID) {
+		super();
 		//SQL Statement
 		String sql = "SELECT * FROM album WHERE album_id = '" + albumID + "';";
 		// System.out.println(sql);
@@ -108,7 +157,7 @@ public class Album {
 	}
 	/**
 	 * delete an album from the database by referncing its primary key ID
-	 * @param albumID
+	 * @param albumID the unique ID used to identify which Album is being retrieved
 	 */
 	public void deleteAlbum(String albumID) {
 		
@@ -188,7 +237,7 @@ public class Album {
 	/**
 	 * Deletes a song from Album's Hashtable and album_song junction table
 	 * References the Song Object itself
-	 * @param song
+	 * @param song is the Song object being referenced by the method
 	 */
 	public void deleteSong(Song song) {
 		albumSongs = new Hashtable<String, Song>();
@@ -214,7 +263,7 @@ public class Album {
 	
 	/**
 	 * Setter for coverImagePath param
-	 * @param coverImagePath
+	 * @param coverImagePath is the attribute being updated
 	 */
 	public void setCoverImagePath(String coverImagePath) {
 	
@@ -251,6 +300,111 @@ public class Album {
 	 */
 	public String getCoverImagePath() {
 		return coverImagePath;
+	}
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * @return the releaseDate
+	 */
+	public String getReleaseDate() {
+		return releaseDate;
+	}
+
+	/**
+	 * @param releaseDate the releaseDate to set
+	 */
+	public void setReleaseDate(String releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	/**
+	 * @return the recordingCompany
+	 */
+	public String getRecordingCompany() {
+		return recordingCompany;
+	}
+
+	/**
+	 * @param recordingCompany the recordingCompany to set
+	 */
+	public void setRecordingCompany(String recordingCompany) {
+		this.recordingCompany = recordingCompany;
+	}
+
+	/**
+	 * @return the numberOfTracks
+	 */
+	public int getNumberOfTracks() {
+		return numberOfTracks;
+	}
+
+	/**
+	 * @param numberOfTracks the numberOfTracks to set
+	 */
+	public void setNumberOfTracks(int numberOfTracks) {
+		this.numberOfTracks = numberOfTracks;
+	}
+
+	/**
+	 * @return the rating
+	 */
+	public String getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
+	/**
+	 * @return the length
+	 */
+	public double getLength() {
+		return length;
+	}
+
+	/**
+	 * @param length the length to set
+	 */
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+	/**
+	 * @return the albumSongs
+	 */
+	public Map<String, Song> getAlbumSongs() {
+		return albumSongs;
+	}
+
+	/**
+	 * @param albumSongs the albumSongs to set
+	 */
+	public void setAlbumSongs(Map<String, Song> albumSongs) {
+		this.albumSongs = albumSongs;
+	}
+
+	/**
+	 * @param albumID the albumID to set
+	 */
+	public void setAlbumID(String albumID) {
+		this.albumID = albumID;
 	}
 	
 }

@@ -21,6 +21,14 @@ import java.awt.event.ActionEvent;
  * This is the GUI for the SpotifyKnockoff application.
  * Uses the Spotify method to search the database for the input specified by the
  * user via the GUI
+ * @param txtSearch Used to collect input from user
+ * @param radShowAlbums selector button for Albums
+ * @param radShowArtists Selector button for Artists
+ * @param radShowSongs Selector button for Songs
+ * @param musicData used to store the data from the database
+ * @param tblData used to display the data to the user on the GUI
+ * @param scroll Used so the user can scroll through search results
+ * @param buttons Group for buttons so only one can be selected at once		
  * @author Josh Chamberlain
  * version 1.1
  */
@@ -28,15 +36,14 @@ public class SpotifyGUI {
 
 	//Variable declarations of all GUI components
 	private static JFrame frame;
-	private JTextField txtSearch;
-	private JRadioButton radShowAlbums;
-	private JRadioButton radShowArtists;
-	private JRadioButton radShowSongs;
-	private DefaultTableModel musicData;
-	private JTable tblData;
-	private JScrollPane scroll;
-	//Group for buttons so only one can be selected at once
-	private ButtonGroup buttons = new ButtonGroup();		
+	private JTextField txtSearch;			
+	private JRadioButton radShowAlbums;	
+	private JRadioButton radShowArtists;	
+	private JRadioButton radShowSongs;		
+	private DefaultTableModel musicData;	
+	private JTable tblData;					
+	private JScrollPane scroll;				
+	private ButtonGroup buttons = new ButtonGroup();	
 
 	/**
 	 * Launch the application.
@@ -45,9 +52,11 @@ public class SpotifyGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					//make the GUI visible
 					SpotifyGUI window = new SpotifyGUI();
 					window.getFrame().setVisible(true);
 				} catch (Exception e) {
+					//display error message to user and log into the txt file
 					ErrorLogger.log(e.getMessage());
 				}
 			}
@@ -66,14 +75,18 @@ public class SpotifyGUI {
 	 */
 	private void initialize() {
 		
+		//Create frame called Spotify
 		setFrame(new JFrame("Spotify"));
+		//set size for it
 		getFrame().setBounds(100, 100, 1200, 550);
 		getFrame().getContentPane().setLayout(null);
 		
+		//Label for the radio button group
 		JLabel lblViewSelector = new JLabel("Select View");
 		lblViewSelector.setBounds(20, 30, 100, 15);
 		getFrame().getContentPane().add(lblViewSelector);
 		
+		//First radio button is used to select Albums as table to search from
 		radShowAlbums = new JRadioButton("Albums");
 		radShowAlbums.addActionListener(new ActionListener() {
 			//if the Albums radio button is selected, display the full list of Albums
@@ -83,11 +96,13 @@ public class SpotifyGUI {
 				}
 			}
 		});
+		//Set size for Albums button
 		radShowAlbums.setBounds(40, 60, 150, 25);
+		//Set this button as the default when the program is opened
 		radShowAlbums.setSelected(true);
 		getFrame().getContentPane().add(radShowAlbums);
 		
-		
+		//Artists radio button
 		radShowArtists = new JRadioButton("Artists");
 		radShowArtists.addActionListener(new ActionListener() {
 			//if the Artists button is selected, display the full list of Artists
@@ -100,6 +115,7 @@ public class SpotifyGUI {
 		radShowArtists.setBounds(40, 85, 150, 25);
 		getFrame().getContentPane().add(radShowArtists);
 		
+		//Songs radio button selector
 		radShowSongs = new JRadioButton("Songs");
 		radShowSongs.addActionListener(new ActionListener() {
 			//if the Songs radio button is selected, display the full list of Songs
@@ -180,13 +196,15 @@ public class SpotifyGUI {
 		//Create Search button
 		btnSearch.setBounds(103, 350, 115, 30);
 		
+		//When button is pressed, display the results
 		getFrame().getContentPane().add(btnSearch);
+		//close program
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**
 	 * static getter for the frame so it can be referenced in other classes
-	 * @return frame
+	 * @return frame so it can be referenced elsewhere
 	 */
 	public static JFrame getFrame() {
 		return frame;
@@ -194,7 +212,7 @@ public class SpotifyGUI {
 
 	/**
 	 * static setter for the frame so it can be called by another class
-	 * @param frame
+	 * @param frame used to change the frame if needed
 	 */
 	public static void setFrame(JFrame frame) {
 		SpotifyGUI.frame = frame;

@@ -16,7 +16,10 @@ import java.io.BufferedWriter;
  */
 public class ErrorLogger {
 
-	
+	/**
+	 * method sends the error to the txt file
+	 * @param errorMessage 
+	 */
 	public static void log(String errorMessage) {
 		//Save the following information to errorlog.txt
 		//Date, Time, errorMessage \n

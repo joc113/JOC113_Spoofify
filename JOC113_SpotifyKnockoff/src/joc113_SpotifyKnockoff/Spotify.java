@@ -19,8 +19,8 @@ public class Spotify {
 	/**
 	 * Used to search the songs table for the song received from the user
 	 * Sends data to a DefaultTableModel
-	 * @param searchTerm
-	 * @return dataTable
+	 * @param searchTerm the term that is the input from the user
+	 * @return dataTable the data that is returned and will be displayed
 	 */
 	public static DefaultTableModel searchSongs(String searchTerm) {
 		
@@ -34,14 +34,14 @@ public class Spotify {
 			// display error message, log the error
 			ErrorLogger.log(e.getMessage());	
 		}
-		
+		//return the Song data
 		return dataTable;
 	}
 	/**
 	 * Used to search the Albums table for the Album received from the user
 	 * Sends data to a DefaultTableModel
-	 * @param searchTerm
-	 * @return dataTable
+	 * @param searchTerm the term that is the input from the user
+	 * @return dataTable contains the data
 	 */
 	public static DefaultTableModel searchAlbums(String searchTerm) {
 		
@@ -55,15 +55,15 @@ public class Spotify {
 			// display error message, log the error
 			ErrorLogger.log(e.getMessage());	
 		}
-		
+		//return the Album data
 		return dataTable;
 	}
 
 	/**
 	 * Used to search the Artists table for the Artist received from the user
 	 * Sends data to a DefaultTableModel
-	 * @param searchTerm
-	 * @return dataTable
+	 * @param searchTerm the term that is the input from the user
+	 * @return dataTable contains the data
 	 */
 	public static DefaultTableModel searchArtists(String searchTerm) {
 		
@@ -79,9 +79,7 @@ public class Spotify {
 			// display error message, log the error
 			ErrorLogger.log(e.getMessage());	
 		}
-				
+		//return the Artist data		
 		return dataTable;
 	}
-	
-
 }

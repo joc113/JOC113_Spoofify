@@ -1,6 +1,15 @@
 package joc113_SpotifyKnockoff;
 
 import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,26 +21,66 @@ import java.util.*;
  * 1. Creating Song Objects from scratch
  * 2. Creating Objects that relate to existing database records
  * 3. Updating the database as needed
+ * @param songID is the unique ID in the database
+ * @param title is the title of the Song
+ * @param length is the length of the Song
+ * @param filePath is the file path that the Song will reference
+ * @param releaseDate is the date the Song was released
+ * @param recordDate is the date that the Song was recorded
  * @author Josh Chamberlain
  * @version 1.1
  */
+//Use JPA to connect with the database
+@Entity
+//Link with the desired database table
+@Table (name = "song")
 public class Song {
+	//Auto-generate an ID for a new Song
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+	/* Specify the column names as they are in MySQL syntax so we don't run into issues
+	 * since our variable names don't have the same names as the MySQL columns*/
+	@Column (name = "song_id")
 	private String songID;
+	
+	@Column (name = "title")
 	private String title;
+	
+	@Column (name = "length")
 	private double length;
+	
+	@Column (name = "file_path")
 	private String filePath;
+	
+	@Column (name = "release_date")
 	private String releaseDate;
+	
+	@Column (name = "record_date")
 	private String recordDate;
+	
+	//This isn't a column in the database, so we have to use Transient
+	//Columns that are marked as Transient are not mapped to the database. This should be used any time
+	//we have a variable that should not be mapped to the database
+	@Transient
 	Map<String, Artist> songArtists;
 	
 	/**
-	 * Constructor used to create a new Song object
-	 * @param title
-	 * @param length
-	 * @param releaseDate
-	 * @param recordDate
+	 * Default Constructor
 	 */
+	public Song() {
+		super();
+	}
+	/**
+	 * Constructor used to create a new Song object
+	 * @param title song title
+	 * @param length how long the song is
+	 * @param releaseDate the date the song was released
+	 * @param recordDate the date the song was recorded
+	 */
+	
 	public Song(String title, double length, String releaseDate, String recordDate){
+		super();
 		this.title = title;
 		this.length = length;
 		this.releaseDate = releaseDate;
@@ -71,14 +120,15 @@ public class Song {
 	
 	/**
 	 * Another constructor for when we don't want to have to open and close a connection for each time we call it
-	 * @param songID
-	 * @param title
+	 * @param songID unique ID for Song object
+	 * @param title title of the song
 	 * @param length
 	 * @param releaseDate
 	 * @param recordDate
 	 */
 	//This makes it so that we can just use the data that we already have access to without creating and closing connections continuously
 	public Song(String songID, String title, double length, String releaseDate, String recordDate){
+		super();
 		this.songID = songID;
 		this.title = title;
 		this.length = length;
@@ -120,10 +170,11 @@ public class Song {
 	
 	/**
 	 * This creates an Object by pulling frmo the database of existing records
-	 * @param songID
+	 * @param songID This constructor only uses the primary key ID as the identifier
 	 */
 	//Retrieve an existing song object from the database based on the songID
 	public Song(String songID){
+		super();
 		//We need to instantiate the value for this Hashtable so we can use it in the addArtist method
 		songArtists = new Hashtable<String, Artist>();
 		String sql = "SELECT * FROM song WHERE song_id = '" + songID + "';";
@@ -148,7 +199,7 @@ public class Song {
 	}
 	/**
 	 * This deletes a song instance in the database by referencing its primary key
-	 * @param songID
+	 * @param songID This method references the primary key ID
 	 */
 	//Deletes song instance in database
 	//As a note, nothing should be all the way deleted from a database
@@ -159,7 +210,7 @@ public class Song {
 		songArtists = new Hashtable<String, Artist>();
 
 		//sql statement
-		String sql = "DELETE FROM song WHERE song_id = ?;";
+		String sql = "DELETE FROM song WHERE song_id = (?);";
 		
 		//Import String into MySQL
 		try {
@@ -178,7 +229,7 @@ public class Song {
 	
 	/**
 	 * Adds to the song's artists in the junction table and the Hashtable
-	 * @param artist
+	 * @param artist the Artist object to be added to the database
 	 */
 	//adds an artist to the song's list of artists by accepting an Artist object
 	public void addArtist(Artist artist) {
@@ -209,7 +260,7 @@ public class Song {
 	/**
 	 * Delete an Artist from the Hashtable and the junction table in the database
 	 * References Artist's artistID
-	 * @param artistID
+	 * @param artistID the unique ID referenced for this method
 	 */
 	//deletes an artist from a song's list of artists using that artist's artistID
 	public void deleteArtist(String artistID) {
@@ -235,7 +286,7 @@ public class Song {
 	}
 	/**
 	 * Delete from the junction table and the Hashtable by referencing the object itself
-	 * @param artist
+	 * @param artist entire Artist object is referenced
 	 */
 	public void deleteArtist(Artist artist) {
 		//instantiate songArtists as Hashtable, then remove the object passed from the Hashtable
@@ -258,7 +309,10 @@ String sql = "DELETE FROM song_artist WHERE fk_artist_id = ?;";
 			ErrorLogger.log(e.getMessage());
 		}
 	}
-	
+	/**
+	 * This is a setter for the filePath of the Song
+	 * @param filePath String that represents file path
+	 */
 	public void setFilePath(String filePath) {
 		//It's not enough to just set the class property. We also need to update it in the database
 		this.filePath = filePath;
@@ -282,10 +336,34 @@ String sql = "DELETE FROM song_artist WHERE fk_artist_id = ?;";
 	}
 /**
  * Getter for songID
- * @return songID
+ * @return songID the unique song id
  */
 	public String getSongID() {
 		return songID;
+	}
+
+	public void setSongID(String songID) {
+	this.songID = songID;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+	public void setReleaseDate(String releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public void setRecordDate(String recordDate) {
+		this.recordDate = recordDate;
+	}
+
+	public void setSongArtists(Map<String, Artist> songArtists) {
+		this.songArtists = songArtists;
 	}
 
 	//Have not used any of these methods yet, but took them from the code example.

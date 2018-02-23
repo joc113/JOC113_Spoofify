@@ -21,17 +21,20 @@ public class Tester {
 		//Use to test SongUpdate class
 		//SongUpdate update = new SongUpdate();
 		//update.updateFilePath("55c908a9-c2f9-44c5-90ed-aecade9234d7", "This is a file path");
-		SongDelete sd = new SongDelete();
-		sd.delete("c463cd2d-c20c-4ce8-b2e0-edef9d3cebc2");
+		//SongDelete sd = new SongDelete();
+		//sd.delete("c463cd2d-c20c-4ce8-b2e0-edef9d3cebc2");
 		
 		//Use to test Artist Persistence Functions
 		//ArtistCreate artist = new ArtistCreate();
 		//artist.create("", "", "Test Artist for Josh", "");
-		
+		//ArtistDelete ad = new ArtistDelete();
+		//ad.delete("c0873d46-4b9e-4224-9048-e7a056376883");
 		
 		//Use to test Album JPA functions
 		//AlbumCreate album = new AlbumCreate();
 		//album.create("Test album for Josh", "2018-12-12", "2018-12-12", 4, "", 5);
+		//AlbumDelete delete = new AlbumDelete();
+		//delete.delete("0d870f3f-67d8-4eea-b401-139ddcf9a76d");
 		
 		/*
 		//use this to test ErrorLogger

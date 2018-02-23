@@ -31,11 +31,11 @@ public class AlbumDelete {
 		emanager.getTransaction().begin();
 		//Create an object for the Song that corresponds to the songID
 		Album album = emanager.find(Album.class, albumID);
-		album.deleteSong(albumID);
 		
-		//Get this object to persist to the database
-		emanager.persist(album);
+		//Get this object to be removed
+		emanager.remove(album);
 		emanager.getTransaction().commit();
+		//close the connection
 		emanager.close();
 		efactory.close();
 	}

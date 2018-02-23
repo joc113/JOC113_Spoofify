@@ -30,11 +30,11 @@ public class ArtistDelete {
 		emanager.getTransaction().begin();
 		//Create an object for the Song that corresponds to the songID
 		Artist artist = emanager.find(Artist.class, artistID);
-		artist.deleteArtist(artistID);
 		
-		//Get this object to persist to the database
-		emanager.persist(artist);
+		//Object is removed from the database
+		emanager.remove(artist);
 		emanager.getTransaction().commit();
+		//close connection
 		emanager.close();
 		efactory.close();
 	}

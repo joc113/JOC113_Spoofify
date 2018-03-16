@@ -2,33 +2,32 @@
 <html>
 <head>
 <!-- CSS Code: Making a table that is mostly blue, black background, white text-->
-<!-- CSS for table adapted from w3 schools how to make a table -->
+<!-- The rest should look fairly basic, but will follow the same color scheme -->
 <style>
 
 h1 {
 	font-family: arial;
 }
 
-.sidenav a {
+body{
+	background-color: #7e839d;
+}
+
+.topnav a:link, a:visited {
+
     float: left;
     display: block;
     color: black;
     text-align: left;
     padding: 0px 5px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 16px;
     font-family: arial;
 }
 
-.sidenav a.active {
-    background-color: #0080ff;
-    color: white;
-}
-
-.sidenav a.hover {
-	background-color: #ddd;
+.topnav a:hover, a:active {
+	background-color: #0080ff;
 	color: white;
-	
 }
 
 input{
@@ -50,6 +49,8 @@ button {
 }
 
 table {
+
+	float: right;
 	font-family: arial;
 	width: 100%;
 	background-color: #000000;
@@ -82,14 +83,25 @@ table thead {
 <h1>Spotify Knockoff</h1>
 
 <!-- Eventually, these links will change what grid is shown and which category is highlighted -->
- <div class="sidenav">
-  <a class="active" href="#songs">Songs</a>
-  <a href="#artists">Artists</a>
-  <a href="#albums">Albums</a>
+<div id="wrap">
+
+<!-- top navigation bar to choose between songs, artists, or albums -->
+<div class="topnav" id ="topnav">
+   <a class="active" href="#songs">Songs</a>
+   <a href="#artists">Artists</a>
+   <a href="#albums">Albums</a>
+</div> 
+
+<!-- search bar -->
+<div id="search">
   <input id ="searchField" type="text" placeholder="Search...">
   <button id="searchButton" type = "button">Search</button>
-</div> 
+</div>
+
 <br>
+
+<!-- Large table for showing the data from the database -->
+<div id="table">
 <table id = "tblSong" border = "1">
   <thead>
 	<tr>
@@ -101,6 +113,7 @@ table thead {
   </thead>
   <tbody>
     <tr>
+    <!-- tests to see if the cells adapt correctly -->
       <td>This is a test for a long title</td>
       <td>8.02</td>
       <td>12-19-1996</td>
@@ -144,5 +157,7 @@ table thead {
     </tr>
   </tbody>
 </table>
+</div>
+</div>
 </body>
 </html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- CSS Code: Making a table that is mostly blue, black background, white text-->
+<!-- CSS for table adapted from w3 schools how to make a table -->
+<style>
+
+h1 {
+	font-family: arial;
+}
+
+.sidenav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: left;
+    padding: 0px 5px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: arial;
+}
+
+.sidenav a.active {
+    background-color: #0080ff;
+    color: white;
+}
+
+.sidenav a.hover {
+	background-color: #ddd;
+	color: white;
+	
+}
+
+input{
+	
+	font-family: arial;
+	font-size: 20px;
+}
+
+button {
+	
+	font-family: arial;
+	font-size: 20px;
+	background-color: #0080ff;
+	border-collapse: collapse;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #000000;
+	color: #ffffff;
+}
+
+table {
+	font-family: arial;
+	width: 100%;
+	background-color: #000000;
+    border-collapse: collapse;
+    border-width: 1px;
+    border-color: #0080ff;
+    border-style: solid;
+    color: #ffffff;
+}
+
+table td, table th {
+  border-width: 2px;
+  border-color: #0080ff;
+  border-style: solid;
+  padding: 2px;
+}
+
+table thead {
+  background-color: #0080ff;
+}
+</style>
+<meta charset="ISO-8859-1">
+<title>Spotify Knockoff</title>
+</head>
+<body>
+<!-- HTML Code Section: Set up a table that will display Song information -->
+<!-- Section adapted from w3 schools tutorial on how to make a Search button -->
+<!-- https://www.w3schools.com/howto/howto_css_searchbar.asp -->
+
+<h1>Spotify Knockoff</h1>
+
+<!-- Eventually, these links will change what grid is shown and which category is highlighted -->
+ <div class="sidenav">
+  <a class="active" href="#songs">Songs</a>
+  <a href="#artists">Artists</a>
+  <a href="#albums">Albums</a>
+  <input id ="searchField" type="text" placeholder="Search...">
+  <button id="searchButton" type = "button">Search</button>
+</div> 
+<br>
+<table id = "tblSong" border = "1">
+  <thead>
+	<tr>
+      <th>Title</th>
+      <th>Length</th>
+      <th>Release Date</th>
+      <th>Record Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>This is a test for a long title</td>
+      <td>8.02</td>
+      <td>12-19-1996</td>
+      <td>12-19-1996</td>
+    </tr>
+    <tr>
+      <td>Short Title</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

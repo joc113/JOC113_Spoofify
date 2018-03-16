@@ -116,6 +116,8 @@ public class Song {
 			//log the error
 			ErrorLogger.log(e.getMessage());
 		}
+		
+		
 	}
 	
 	/**
@@ -421,6 +423,8 @@ String sql = "DELETE FROM song_artist WHERE fk_artist_id = ?;";
 		
 	}
 		*/
+	
+	
 
 
 }

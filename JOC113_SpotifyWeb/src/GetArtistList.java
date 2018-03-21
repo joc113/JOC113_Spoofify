@@ -33,8 +33,12 @@ public class GetArtistList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//indicate that responses will be in JSON
 		response.setContentType("application/json");
 		
+		//Use DbUtilities to SELECT all attributes of artists from the database and put them in
+		//the JSONArray called artistList
 		try {
 			DbUtilities db = new DbUtilities();
 			String sql = "SELECT * FROM artist;";
@@ -52,6 +56,7 @@ public class GetArtistList extends HttpServlet {
 				artistList.put(artist);
 			}
 			
+			//Show the artistList
 			response.getWriter().write(artistList.toString());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

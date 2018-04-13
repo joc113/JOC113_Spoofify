@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>JOC113 Spoofify</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+
+<style type = "text/css">
+
+body{
+	margin: 0px;
+	background: #7e839d;
+}
+
+.tblData {
+	font-family: sans-serif;
+	background-color: black;
+	color: white;
+
+}
+
+.sidebar {
+	height: 100%;
+	position: fixed;
+    width:18%;
+    float:left;
+    background-color:#7e839d;
+    color:white;
+    font-size: 20px;
+    font-family: Helvetica;
+    background: -moz-linear-gradient(top, #39455f 0%, #000000 100%);
+	background: -webkit-linear-gradient(top, #39455f 0%, #000000 100%);
+	background: linear-gradient(top, #39455f 0%, #000000 100%);
+    <!--cursor: pointer;-->
+    
+}
+
+.main {
+	height: 100%;
+	margin-left: 18%;
+	position: fixed;
+	width: 100%;
+	color: white;
+	background-color: black;
+	background-image: url("spoofify_background.jpg");
+	background-size: 100% 100%;
+	
+}
+
+</style>
+<script>
+
+var searchResult = null;
+$(document).ready(function(){
+	
+	$("#btnSearch").click(function(){
+		var searchTerm = $("#txtSearch").val();
+		
+		search(searchTerm);
+	});
+	
+	
+});
+
+function search(searchTerm){
+	var searchUrl = "api/get_songs?searchTerm=" + searchTerm;
+	// console.log(searchUrl);
+	$.get(searchUrl, function(data){
+		// console.log(data);
+		// var viewModel = {};
+		// viewModel.songData = data;
+		songSearchResults(data);
+	});
+}
+
+function songSearchResults(data){
+	console.log(data.songs);	
+	ko.applyBindings(data);
+}
+
+function songList(){
+	self = this;
+}
+
+function albumList(){
+	self = this;
+}
+
+function artistList(){
+	self = this;
+}
+//var element = $('#txtSearch'); 
+//ko.cleanNode(songs);
+</script>
+</head>
+<body>
+<div id="container">
+	
+<div class = "main">
+	<br />
+	<input type="text" id="txtSearch" placeholder="Search..." />
+	<br />
+	<input type="button" id="btnSearch" value="Search" />
+
+<br /><br />
+<table id="tblData" border="1" cellspacing="0" cellpadding="4">
+	<thead>
+		<tr>
+	        <th>Title</th><th>Length</th><th>Release Date</th><th>Record Date</th>
+	    </tr>		
+    </thead>
+    <tbody data-bind="foreach: songs">
+	    <tr>
+	        <td data-bind="text: title"></td>
+	        <td data-bind="text: length"></td>
+	        <td data-bind="text: release_date"></td>
+	        <td data-bind="text: record_date"></td>
+	    </tr> 
+    </tbody>
+</table>
+
+</div>
+<div class= "sidebar">
+	<div class="logo">
+		<img src = "spoofify_logo.png" alt = "logo" width = "100%"/>
+		<br/>
+	</div>
+	<input type="radio" id="option1" name = "radSearchBy" value="allMusic"> All Music<br>
+	<input type="radio" id="option2" name = "radSearchBy" value="song"> Songs<br>
+    <input type="radio" id="option3" name = "radSearchBy" value="artists"> Artists<br>
+    <input type="radio" id="option4" name = "radSearchBy" value="albums"> Albums
+</div>
+</div>
+</body>
+</html>

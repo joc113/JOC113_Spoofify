@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Spotify</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+<script>
+
+var searchResult = null;
+$(document).ready(function(){
+	
+	$("#btnSearch").click(function(){
+		var searchTerm = $("#txtSearch").val();
+		
+		search(searchTerm);
+	});
+	
+	
+});
+
+function search(searchTerm){
+	var searchUrl = "api/get_songs?searchTerm=" + searchTerm;
+	// console.log(searchUrl);
+	$.get(searchUrl, function(data){
+		// console.log(data);
+		// var viewModel = {};
+		// viewModel.songData = data;
+		songSearchResults(data);
+	});
+}
+
+function songSearchResults(data){
+	console.log(data.songs);	
+	ko.applyBindings(data);
+}
+
+function songList(){
+	self = this;
+}
+
+function albumList(){
+	self = this;
+}
+
+function artistList(){
+	self = this;
+}
+</script>
+</head>
+<body>
+<div>
+	
+	
+	<input type="text" id="txtSearch" value="" />
+	<input type="button" id="btnSearch" value="Search" />
+</div>
+<br /><br />
+<div>
+<table id="tblData" border="1" cellspacing="0" cellpadding="4">
+	<thead>
+		<tr>
+	        <th>Title</th><th>Length</th><th>Release Date</th><th>Record Date</th>
+	    </tr>		
+    </thead>
+    <tbody data-bind="foreach: songs">
+	    <tr>
+	        <td data-bind="text: title"></td>
+	        <td data-bind="text: length"></td>
+	        <td data-bind="text: release_date"></td>
+	        <td data-bind="text: record_date"></td>
+	    </tr> 
+    </tbody>
+</table>
+</div>
+
+</body>
+</html>
